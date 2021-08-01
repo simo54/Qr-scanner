@@ -58,6 +58,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "modulePathIgnorePatterns": ["<rootDir>/node_modules/"],
     "moduleFileExtensions": [
       "ts",
       "tsx",
