@@ -80,7 +80,7 @@
     "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)",
-      "node_modules/@react-native"
+      "node_modules/(?!@react-native/.*)"
     ]
   }
 }
