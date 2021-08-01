@@ -86,7 +86,6 @@
       "<rootDir>/node_modules/(react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|react-native-code-push)"
     ],
     "resolutions": {
-      "react-native/@jest/create-cache-key-function": "^27.0.2"
-   }
+      "@jest/create-cache-key-function": "^27.0.1"   }
   }
 }
