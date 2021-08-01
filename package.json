@@ -74,7 +74,9 @@
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "node_modules/(?!@react-native|react-native)"
+
     ],
     "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
