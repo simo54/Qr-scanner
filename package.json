@@ -75,8 +75,7 @@
     "testPathIgnorePatterns": [
       "\\.snap$",
       "<rootDir>/node_modules/",
-      "node_modules/(?!@react-native|react-native)"
-
+      "node_modules/(?!(jest-)?@react-native|react-native|react-clone-referenced-element/*)"
     ],
     "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
