@@ -79,7 +79,6 @@
     ],
     "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
-      "node_modules/(?!variables/.*)",
       "node_modules/(?!@react-native/polyfills/error-guard.js)"
     ]
   }
