@@ -81,7 +81,7 @@
     ],
     "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|variables/.*)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-camera)/)"
     ]
   }
 }
