@@ -1,44 +1,73 @@
-import React from 'react';
-import { Platform, View } from 'react-native';
-import { RNCamera } from 'react-native-camera';
-import { useCamera } from 'react-native-camera-hooks';
-import { Button } from 'react-native-elements';
+import React, { useEffect, useState } from 'react';
+import {
+	Linking,
+	View,
+	Text,
+	TouchableOpacity,
+	PermissionsAndroid,
+} from 'react-native';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 import style from './style';
 
 export default function Camera() {
-	const [{ cameraRef }, { takePicture }] = useCamera(undefined);
+	const [hasPermission, setHasPermission] = useState(false);
 
-	const captureCode = async () => {
+	const onScan = (e: any) => {
+		console.log(e);
+		Linking.openURL(e.data).catch((err) =>
+			console.error('An error occured', err)
+		);
+	};
+
+	console.log(PermissionsAndroid);
+
+	const askForCameraPermission = async () => {
 		try {
-			const data = await takePicture();
-			console.log(data.uri);
-		} catch (error) {
-			console.log(error);
+			const granted = await PermissionsAndroid.request(
+				PermissionsAndroid.PERMISSIONS.CAMERA,
+				{
+					title: 'Cool Photo App Camera Permission',
+					message:
+						'Cool Photo App needs access to your camera ' +
+						'so you can take awesome pictures.',
+					buttonNeutral: 'Ask Me Later',
+					buttonNegative: 'Cancel',
+					buttonPositive: 'OK',
+				}
+			);
+			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+				setHasPermission(true);
+			} else {
+				setHasPermission(false);
+			}
+		} catch (err) {
+			console.warn(err);
 		}
 	};
 
+	// Request Camera Permission
+	useEffect(() => {
+		askForCameraPermission();
+	}, []);
+
 	return (
 		<View style={style.styleCamera.container}>
-			<RNCamera
-				ref={cameraRef}
-				style={
-					Platform.OS === 'ios'
-						? style.styleCamera.previewIOS
-						: style.styleCamera.previewAndroid
-				}
-				type={RNCamera.Constants.Type.back}
-				captureAudio={false}
-				flashMode={RNCamera.Constants.FlashMode.on}
-				androidCameraPermissionOptions={{
-					title: 'Permission to use camera',
-					message: 'We need your permission to use your camera',
-					buttonPositive: 'Ok',
-					buttonNegative: 'Cancel',
-				}}>
-				<Button title='Capture' onPress={() => captureCode}>
-					Click
-				</Button>
-			</RNCamera>
+			{hasPermission ? (
+				<QRCodeScanner
+					onRead={onScan}
+					topContent={
+						<Text>
+							Go to <Text>wikipedia.org/wiki/QR_code</Text> on your computer and
+							scan the QR code.
+						</Text>
+					}
+					bottomContent={
+						<TouchableOpacity>
+							<Text>OK. Got it!</Text>
+						</TouchableOpacity>
+					}
+				/>
+			) : null}
 		</View>
 	);
 }
