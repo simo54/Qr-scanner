@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { useCamera } from 'react-native-camera-hooks';
 import { Button } from 'react-native-elements';
+import style from './style';
 
 export default function Camera() {
 	const [{ cameraRef }, { takePicture }] = useCamera(undefined);
@@ -17,8 +18,18 @@ export default function Camera() {
 	};
 
 	return (
-		<View>
-			<RNCamera ref={cameraRef} type={RNCamera.Constants.Type.back}>
+		<View style={style.styleCamera.container}>
+			<RNCamera
+				ref={cameraRef}
+				type={RNCamera.Constants.Type.back}
+				captureAudio={false}
+				flashMode={RNCamera.Constants.FlashMode.on}
+				androidCameraPermissionOptions={{
+					title: 'Permission to use camera',
+					message: 'We need your permission to use your camera',
+					buttonPositive: 'Ok',
+					buttonNegative: 'Cancel',
+				}}>
 				<Button title='Capture' onPress={() => captureCode}>
 					Click
 				</Button>
